@@ -1,18 +1,20 @@
 #include <iostream>
 using namespace std;
 
-template <typename T>
+template<typename T>
 struct list{
     struct node{
         T data;
-        node *forward;
-        node *backward;
+        node* forward;
+        node* backward;
     };
     unsigned int hem;
-    node* head; 
+    node* head;
     node* rear;
-    list() {
-        hem=0; head=NULL; rear=NULL;
+    list(){
+        hem = 0;
+        head = NULL;
+        rear = NULL;
     }
     bool empty(){
         if(hem) return 0;
@@ -21,73 +23,63 @@ struct list{
     unsigned int size(){
         return hem;
     }
-    void push_front(T n){
-        node* temp = new struct node;
-        if(empty()) {head = temp;rear=temp;}
-        else{ head->backward = temp; temp->forward = head;}
-        temp->backward=NULL;
-        temp->data = n;
-        head = temp;    
-        hem++;
-    }
     void push_back(T n){
         node* temp = new struct node;
-        if(empty()) {head = temp;rear=temp;}
-        else{ rear->forward = temp; temp->backward = rear;}
-        temp->forward = NULL;
         temp->data = n;
+        if(empty()) {head = temp; temp->backward = NULL;}
+        else {rear->forward = temp; temp->backward = rear;}
+        temp->forward = NULL;
         rear = temp;
         hem++;
     }
-    T front(){
-        return head->data;
-    }
-    T back(){
-        return rear->data;
-    }
-    void pop_front(){
-        node* temp = head;
-        head = temp->forward;
-        head->backward = NULL;
-        delete temp;
+    void push_front(T n){
+        node* temp = new struct node;
+        temp->data = n;
+        if(empty()) {head = temp; rear = temp; temp->forward = NULL;}
+        else {head->backward = temp; temp->forward = head;}
+        temp->backward = NULL;
+        head = temp;
+        hem++;
     }
     void pop_back(){
         node* temp = rear;
         rear = temp->backward;
         rear->forward = NULL;
         delete temp;
+        hem--;
     }
-    void insert(int x, T n){
-        node* z = head;
-        for(int i=-1; i<x; i++){
-            z = z->forward;
-        }
-        node* temp = new struct node;
-        node* bef = z->backward;
-        temp->data = n;
-        temp->forward = z; temp->backward = bef;
-        bef->forward = temp; z->backward = temp;
+    void pop_front(){
+        node* temp = head;
+        head = temp->forward;
+        head->backward = NULL;
+        delete temp;
+        hem--;
     }
-    ~list(){
-        while (!empty())
-        {
-            pop_front();
-        }
-        
-    }
+
+    T front(){return head->data;}
+    T back(){return rear->data;}
 };
+
 
 int main(){
     list<int> l;
 
-    l.push_front(2);
-    l.push_front(3);
-    l.push_front(4);
-    l.push_front(5);
+    l.push_back(1);
+    l.push_back(2);
+    l.push_back(3);
 
-    cout << l.back() << endl;
-    l.insert(2, 6);
+    cout << "front : " << l.front() << endl;
+    l.pop_front();
+    cout << "front : " << l.front() << endl;
+    l.push_front(1);
+    cout << endl;
+
+    cout << "back : " << l.back() << endl;
     l.pop_back();
-    cout << l.back() << endl;
+    cout << "back : " << l.back() << endl;
+    l.push_back(3);
+    cout << endl;
 
+    cout << "size : " << l.size() << endl;
+    
 }
