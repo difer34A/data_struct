@@ -23,6 +23,7 @@ struct p_queue{
         node* temp = head;
         while(temp->point->data > val || temp->point == NULL){
             temp = temp->point;
+            
             if(temp->point == NULL) return temp;
         }
         return temp;
