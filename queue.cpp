@@ -6,6 +6,13 @@ struct queue{
     struct node{
         T data;
         node *point;
+        node() {
+            point = NULL;
+        }
+        node (T x) {
+            data = x;
+            point = NULL;
+        }
     };
     unsigned int hem;
     node* head; 
@@ -21,11 +28,9 @@ struct queue{
         return hem;
     }
     void push(T n){
-        node* temp = new struct node;
+        node* temp = new struct node(n);
         if(empty()) {head = temp;rear=temp;}
         else{ rear->point = temp;}
-        temp->data = n;
-        temp->point = NULL;
         rear = temp;
         hem++;
     }

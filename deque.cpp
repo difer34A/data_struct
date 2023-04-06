@@ -2,7 +2,7 @@
 using namespace std;
 
 template <typename T>
-struct list{
+struct deque{
     struct node{
         T data;
         node *forward;
@@ -11,7 +11,7 @@ struct list{
     unsigned int hem;
     node* head; 
     node* rear;
-    list() {
+    deque() {
         hem=0; head=NULL; rear=NULL;
     }
     bool empty(){
@@ -57,18 +57,7 @@ struct list{
         rear->forward = NULL;
         delete temp;
     }
-    void insert(int x, T n){
-        node* z = head;
-        for(int i=-1; i<x; i++){
-            z = z->forward;
-        }
-        node* temp = new struct node;
-        node* bef = z->backward;
-        temp->data = n;
-        temp->forward = z; temp->backward = bef;
-        bef->forward = temp; z->backward = temp;
-    }
-    ~list(){
+    ~deque(){
         while (!empty())
         {
             pop_front();
@@ -78,16 +67,16 @@ struct list{
 };
 
 int main(){
-    list<int> l;
+    deque<int> l;
 
     l.push_front(2);
     l.push_front(3);
     l.push_front(4);
     l.push_front(5);
+    l.push_back(10);
+    l.push_back(100);
 
     cout << l.back() << endl;
-    l.insert(2, 6);
     l.pop_back();
     cout << l.back() << endl;
-
 }
