@@ -1,0 +1,28 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std; 
+
+struct p_queue_with_heap{
+    unsigned int cap, size;
+    int* head;
+    p_queue_with_heap(){
+        cap=0; size=0; 
+        head=nullptr;
+    }
+    int* create_arr(int n, int* arr){
+        if(cap) cap=1;
+        else cap *= 2;
+        
+        int* ptr = new int[cap];
+        
+        for(int i=0; i<(cap/2); i++){
+            ptr[i] = arr[i];
+        }
+        
+        head = ptr;
+    }
+};
+
+int main() {
+    
+}
